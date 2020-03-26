@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SearchController {
 
     @Autowired
-    WebCrawlerService webCrawlerService;
+    private WebCrawlerService webCrawlerService;
 
     @GetMapping("/search/{key}")
     private void searchHTMLFiles(@PathVariable String key) throws IOException {
