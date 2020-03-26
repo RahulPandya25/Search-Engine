@@ -9,9 +9,12 @@ function search(event) {
   if (event.code === "Enter") {
     // call our API
     axios.get(URL + "/search/+" + value).then(response => {
-      if (response && response.status === 200)
+      if (response && response.status === 200) {
         console.log("data: " + response.data);
-      else showErrorMsg = true;
+        let tag = "<h4>" + response.data + "</h4>";
+        $(".content").empty();
+        $(".content").append(tag);
+      } else showErrorMsg = true;
     });
   }
 }
