@@ -19,5 +19,5 @@ public interface WebCrawlerService {
      * @param word
      * @param url
      */
-    public void crawl(String word, String url) throws IOException;
+    public void search(String word, String url) throws IOException;
 }
