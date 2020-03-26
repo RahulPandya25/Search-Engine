@@ -53,8 +53,8 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
             System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
     }
 }
-
-    private boolean searchForWord(String word) {
+    @Override
+    public boolean searchForWord(String word) {
         if(this.document == null){
             throw new RuntimeException("Error in fetching the Document");
         }
