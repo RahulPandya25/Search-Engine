@@ -3,6 +3,7 @@ package com.project.computingconcept.searchengine.ServiceImpl;
 import com.project.computingconcept.searchengine.Model.Result;
 import com.project.computingconcept.searchengine.Service.TrieService;
 import com.project.computingconcept.searchengine.Service.WebCrawlerService;
+import com.project.computingconcept.searchengine.Utility.Sort;
 import com.project.computingconcept.searchengine.Utility.TrieST;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -22,7 +23,8 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
     TrieService trieService;
 
     private static final String STARTING_URL = "https://www.javatpoint.com/";
-    private static final int MAX_PAGES_TO_SEARCH = 10;
+    private static final int MAX_PAGES_TO_SEARCH = 100;
+    private static final int MAX_RANK_TO_BE_DISPLAYED = 5;
     private Set<String> pagesVisited;
     private List<String> pagesToVisit;
     private List<TrieST> trieSTList;
@@ -30,6 +32,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
     private List<Result> resultList;
 
     //to initialize the lists
+
     /**
      * @param word
      * @return
@@ -64,8 +67,28 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
             System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
         }
         System.out.println(resultList);
-        System.out.println("Size of data "+ resultList.size());
-        //TODO call for indexing
+        System.out.println("Size of data " + resultList.size());
+
+        Result[] results = indexAndSortResultList(word);
+        List<Result> resultsList = Arrays.asList(results);
+    }
+
+    private Result[] indexAndSortResultList(String word) {
+        Result[] results = new Result[MAX_RANK_TO_BE_DISPLAYED];
+        Result[] allResults = new Result[resultList.size()];
+        resultList.toArray(allResults);
+
+//        sorting results
+        Sort.quicksort(allResults, word);
+
+//        reversing array
+        if (allResults.length > MAX_RANK_TO_BE_DISPLAYED) {
+            int j = allResults.length - 1;
+            for (int i = 0; i < MAX_RANK_TO_BE_DISPLAYED; i++) {
+                results[i] = allResults[j--];
+            }
+        }
+        return results;
     }
 
     @Override
@@ -77,6 +100,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         String bodyText = this.document.text();
         return bodyText.toLowerCase().contains(word.toLowerCase());
     }
+
     // to crawl through each url and get all the page links, create trie and add the result object in the list.
     private List<String> crawl(String currentUrl) throws IOException {
         List<String> links = new LinkedList<String>();
@@ -97,6 +121,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return links;
 
     }
+
     //to fetch the nect url from the pagesToVisit array.
     private String nextUrl() {
         String nextUrl;
