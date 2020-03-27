@@ -27,8 +27,9 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
     private List<String> pagesToVisit;
     private List<TrieST> trieSTList;
     private Document document;
-    private List<Result> dataList;
+    private List<Result> resultList;
 
+    //to initialize the lists
     /**
      * @param word
      * @return
@@ -38,7 +39,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         pagesVisited = new HashSet<String>();
         pagesToVisit = new LinkedList<String>();
         trieSTList = new ArrayList<TrieST>();
-        dataList = new ArrayList<Result>();
+        resultList = new ArrayList<Result>();
         search(word, STARTING_URL);
 
     }
@@ -62,7 +63,8 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
 
             System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
         }
-        System.out.println(dataList);
+        System.out.println(resultList);
+        System.out.println("Size of data "+ resultList.size());
         //TODO call for indexing
     }
 
@@ -75,7 +77,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         String bodyText = this.document.text();
         return bodyText.toLowerCase().contains(word.toLowerCase());
     }
-
+    // to crawl through each url and get all the page links, create trie and add the result object in the list.
     private List<String> crawl(String currentUrl) throws IOException {
         List<String> links = new LinkedList<String>();
         Connection connection = Jsoup.connect(currentUrl);
@@ -87,8 +89,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         this.trieSTList.add(trie);
         Elements metaTags = document.getElementsByTag("meta");
         Result result = createResult(metaTags, trie);
-
-        dataList.add(result);
+        this.resultList.add(result);
         Elements numberOfLinks = document.select("a[href]");
         for (Element link : numberOfLinks) {
             links.add(link.absUrl("href"));
@@ -96,7 +97,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return links;
 
     }
-
+    //to fetch the nect url from the pagesToVisit array.
     private String nextUrl() {
         String nextUrl;
         do {
@@ -106,6 +107,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return nextUrl;
     }
 
+    //to create result object from the document.
     private Result createResult(Elements metaTags, TrieST<Integer> trie) {
         Result result = new Result();
         for (Element meta : metaTags) {
