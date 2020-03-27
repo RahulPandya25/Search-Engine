@@ -58,12 +58,11 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         System.out.println(resultList);
         System.out.println("Size of data " + resultList.size());
 
-        Result[] results = indexAndSortResultList(word);
-        List<Result> resultsList = Arrays.asList(results);
+        List<Result> resultsList = indexAndSortResultList(word);
         return resultsList;
     }
 
-    private Result[] indexAndSortResultList(String word) {
+    private List<Result> indexAndSortResultList(String word) {
         Result[] results = new Result[MAX_RANK_TO_BE_DISPLAYED];
         Result[] allResults = new Result[resultList.size()];
         resultList.toArray(allResults);
@@ -78,7 +77,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
                 results[i] = allResults[j--];
             }
         }
-        return results;
+        return Arrays.asList(results);
     }
 
     @Override
@@ -90,6 +89,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         String bodyText = this.document.text();
         return bodyText.toLowerCase().contains(word.toLowerCase());
     }
+
     // to crawl through each url and get all the page links, create trie and add the result object in the list.
     private List<String> crawl(String currentUrl) throws IOException {
         List<String> links = new LinkedList<String>();
@@ -110,6 +110,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return links;
 
     }
+
     //to fetch the next url from the pagesToVisit array.
     private String nextUrl() {
         String nextUrl;

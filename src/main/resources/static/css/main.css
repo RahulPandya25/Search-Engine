@@ -60,7 +60,25 @@ body {
 }
 
 .content {
-  min-height: 400px;
-  padding: 2rem;
+  padding: 0 2rem;
+  max-width: 80%;
+}
+
+.content .result {
+  margin: 1.5rem;
+}
+
+.content .result .title {
+  font-size: 1.3rem;
+  color: #1a0dab;
+}
+
+.content .result .desc {
+  font-size: 1rem;
+}
+
+.content .result .link a {
+  font-size: 0.8rem;
+  color: green;
 }
 /*# sourceMappingURL=main.css.map */

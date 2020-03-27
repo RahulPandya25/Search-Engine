@@ -31,7 +31,19 @@ function searchWord(value) {
   axios.get(URL + "/search/" + value).then(response => {
     if (response && response.status === 200) {
       console.log("data: " + response);
-      let tag = "<h4>" + response.data + "</h4>";
+      let tag = "";
+      response.data.forEach(element => {
+        tag +=
+          ' <div class="result"><div class="title">' +
+          element.title +
+          '</div><div class="desc">' +
+          element.description +
+          '</div><div class="link"><a href="' +
+          element.url +
+          '">' +
+          element.url +
+          "</a></div></div>";
+      });
       $(".content").empty();
       $(".content").append(tag);
     } else showErrorMsg = true;
