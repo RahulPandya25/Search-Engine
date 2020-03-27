@@ -2,10 +2,12 @@ package com.project.computingconcept.searchengine.ServiceImpl;
 
 import com.project.computingconcept.searchengine.Constants.CreateTrie;
 import com.project.computingconcept.searchengine.Service.WordPredictService;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class WordPredictServiceImpl implements WordPredictService {
     @Override
     public List<String> autoCompleteWord(String key) {

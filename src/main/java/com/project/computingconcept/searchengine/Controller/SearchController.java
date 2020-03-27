@@ -17,20 +17,23 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SearchController {
 
+    private static final String STARTING_URL = "https://www.javatpoint.com/";
+
     @Autowired
     private WebCrawlerService webCrawlerService;
 
-    private WordPredictService predictService = new WordPredictServiceImpl();
+    @Autowired
+    private WordPredictService wordPredictService;
 
     @GetMapping("/search/{key}")
     private void searchHTMLFiles(@PathVariable String key) throws IOException {
-        webCrawlerService.search(key);
+        webCrawlerService.search(key,STARTING_URL);
     }
 
     @GetMapping("/autocomplete/{key}")
     private List<String> autocomplete(@PathVariable String key) {
         List<String> predictedWords;
-        predictedWords = predictService.autoCompleteWord(key);
+        predictedWords = wordPredictService.autoCompleteWord(key);
         return predictedWords;
     }
 
