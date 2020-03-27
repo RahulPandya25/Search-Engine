@@ -97,15 +97,15 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         this.document = connection.get();
         if (connection.response().statusCode() == 200) {
             System.out.println("\n**Visiting** Received web page at " + currentUrl);
-        }
-        TrieST<Integer> trie = trieService.createTrie(this.document.text());
-        this.trieSTList.add(trie);
-        Elements metaTags = document.getElementsByTag("meta");
-        Result result = createResult(metaTags, trie);
-        this.resultList.add(result);
-        Elements numberOfLinks = document.select("a[href]");
-        for (Element link : numberOfLinks) {
-            links.add(link.absUrl("href"));
+            TrieST<Integer> trie = trieService.createTrie(this.document.text());
+            this.trieSTList.add(trie);
+            Elements metaTags = document.getElementsByTag("meta");
+            Result result = createResult(metaTags, trie);
+            this.resultList.add(result);
+            Elements numberOfLinks = document.select("a[href]");
+            for (Element link : numberOfLinks) {
+                links.add(link.absUrl("href"));
+            }
         }
         return links;
 
