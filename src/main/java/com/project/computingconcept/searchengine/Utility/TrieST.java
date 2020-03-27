@@ -261,6 +261,11 @@ public class TrieST<Value> {
         return null;
     }
 
+    public int getWordCount(String word) {
+        if(this.get(word) == null) return 0;
+        else return (int) get(word);
+    }
+
     /**
      * Unit tests the <tt>TrieSET</tt> data type.
      */

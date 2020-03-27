@@ -19,6 +19,9 @@ body {
 
 .search {
   padding: 2.5rem 2rem 1rem 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .search label {
@@ -26,18 +29,56 @@ body {
   margin-right: 1rem;
 }
 
-.search input {
+.search .input-suggestion {
+  width: 50%;
+}
+
+.search .input-suggestion input {
   font-size: 1.25em;
   border: none;
   border-bottom: 2px solid #4576ff;
   padding: 0.5rem;
-  width: 50%;
+  width: 100%;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
+.search .input-suggestion .suggestions {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.search .input-suggestion .suggestions .suggestion {
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+}
+
+.search .input-suggestion .suggestions .suggestion:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .content {
-  min-height: 400px;
-  padding: 2rem;
+  padding: 0 2rem;
+  max-width: 80%;
+}
+
+.content .result {
+  margin: 1.5rem;
+}
+
+.content .result .title {
+  font-size: 1.3rem;
+  color: #1a0dab;
+}
+
+.content .result .desc {
+  font-size: 1rem;
+}
+
+.content .result .link a {
+  font-size: 0.8rem;
+  color: green;
 }
 /*# sourceMappingURL=main.css.map */
