@@ -35,25 +35,14 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
 
     /**
      * @param word
-     * @return
+     * @param url
      */
     @Override
-    public void search(String word) throws IOException {
+    public List<Result> search(String word, String url) throws IOException {
         pagesVisited = new HashSet<String>();
         pagesToVisit = new LinkedList<String>();
         trieSTList = new ArrayList<TrieST>();
         resultList = new ArrayList<Result>();
-        search(word, STARTING_URL);
-
-    }
-
-    /**
-     * @param word
-     * @param url
-     */
-    @Override
-    public void search(String word, String url) throws IOException {
-
         String currentUrl;
 
         while (pagesVisited.size() < MAX_PAGES_TO_SEARCH) {
@@ -71,6 +60,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
 
         Result[] results = indexAndSortResultList(word);
         List<Result> resultsList = Arrays.asList(results);
+        return resultsList;
     }
 
     private Result[] indexAndSortResultList(String word) {
@@ -100,7 +90,6 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         String bodyText = this.document.text();
         return bodyText.toLowerCase().contains(word.toLowerCase());
     }
-
     // to crawl through each url and get all the page links, create trie and add the result object in the list.
     private List<String> crawl(String currentUrl) throws IOException {
         List<String> links = new LinkedList<String>();
@@ -121,8 +110,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return links;
 
     }
-
-    //to fetch the nect url from the pagesToVisit array.
+    //to fetch the next url from the pagesToVisit array.
     private String nextUrl() {
         String nextUrl;
         do {
