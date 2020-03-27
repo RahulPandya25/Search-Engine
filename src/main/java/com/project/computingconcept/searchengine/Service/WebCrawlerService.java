@@ -20,4 +20,11 @@ public interface WebCrawlerService {
      * @param url
      */
     public void search(String word, String url) throws IOException;
+
+    /**
+     *
+     * @param word
+     * @return
+     */
+    public boolean searchForWord(String word);
 }
