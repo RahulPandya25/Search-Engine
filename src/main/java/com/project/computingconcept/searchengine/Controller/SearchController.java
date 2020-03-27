@@ -18,7 +18,7 @@ import java.util.List;
 public class SearchController {
 
     @Autowired
-    WebCrawlerService webCrawlerService;
+    private WebCrawlerService webCrawlerService;
 
     private WordPredictService predictService = new WordPredictServiceImpl();
 
