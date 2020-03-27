@@ -1,5 +1,6 @@
 package com.project.computingconcept.searchengine.Controller;
 
+import com.project.computingconcept.searchengine.Model.Result;
 import com.project.computingconcept.searchengine.Service.WebCrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.project.computingconcept.searchengine.Service.WordPredictService;
@@ -26,8 +27,8 @@ public class SearchController {
     private WordPredictService wordPredictService;
 
     @GetMapping("/search/{key}")
-    private void searchHTMLFiles(@PathVariable String key) throws IOException {
-        webCrawlerService.search(key,STARTING_URL);
+    private List<Result> searchHTMLFiles(@PathVariable String key) throws IOException {
+        return webCrawlerService.search(key,STARTING_URL);
     }
 
     @GetMapping("/autocomplete/{key}")

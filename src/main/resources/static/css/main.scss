@@ -19,24 +19,57 @@ body {
 
 .search {
   padding: 2.5rem 2rem 1rem 2rem;
+  display: flex;
 
   label {
     font-size: 1.5rem;
     margin-right: 1rem;
   }
 
-  input {
-    font-size: 1.25em;
-    border: none;
-    border-bottom: 2px solid rgb(69, 118, 255);
-    padding: 0.5rem;
+  .input-suggestion {
     width: 50%;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    input {
+      font-size: 1.25em;
+      border: none;
+      border-bottom: 2px solid rgb(69, 118, 255);
+      padding: 0.5rem;
+      width: 100%;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    .suggestions {
+      width: 100%;
+      background-color: rgb(224, 224, 224);
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      .suggestion {
+        padding: 0.25rem 1rem;
+        cursor: pointer;
+        &:hover {
+          background-color: rgba($color: #000000, $alpha: 0.05);
+        }
+      }
+    }
   }
 }
 
 .content {
-  min-height: 400px;
-  padding: 2rem;
+  padding: 0 2rem;
+  max-width: 80%;
+  .result {
+    margin: 1.5rem;
+
+    .title {
+      font-size: 1.3rem;
+      color: #1a0dab;
+    }
+    .desc {
+      font-size: 1rem;
+    }
+    .link a {
+      font-size: 0.8rem;
+      color: green;
+    }
+  }
 }

@@ -17,13 +17,17 @@
     <div class="container">
       <div class="search">
         <label for="searchBox">Search</label>
-        <input
-          type="text"
-          name="searchBox"
-          id="searchBox"
-          onkeypress="search(event)"
-        />
+        <div class="input-suggestion">
+          <input
+            type="text"
+            name="searchBox"
+            id="searchBox"
+            onkeyup="keyUp(event)"
+          />
+          <div class="suggestions"></div>
+        </div>
       </div>
+
       <div class="content"></div>
     </div>
   </body>

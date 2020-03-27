@@ -15,10 +15,8 @@ public class WordPredictServiceImpl implements WordPredictService {
         Iterable<String> allPredictedStrings = CreateTrie.trie.keysWithPrefix(key);
         int count = 0;
         for (String word : allPredictedStrings) {
-            if (!word.equals(key)) {
-                top5predictedWords.add(word);
-                count++;
-            }
+            top5predictedWords.add(word);
+            count++;
             if (count == 5) break;
         }
         return top5predictedWords;
