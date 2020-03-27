@@ -29,28 +29,16 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
     private Document document;
     private List<Result> resultList;
 
-    //to initialize the lists
-    /**
-     * @param word
-     * @return
-     */
-    @Override
-    public void search(String word) throws IOException {
-        pagesVisited = new HashSet<String>();
-        pagesToVisit = new LinkedList<String>();
-        trieSTList = new ArrayList<TrieST>();
-        resultList = new ArrayList<Result>();
-        search(word, STARTING_URL);
-
-    }
-
     /**
      * @param word
      * @param url
      */
     @Override
-    public void search(String word, String url) throws IOException {
-
+    public List<Result> search(String word, String url) throws IOException {
+        pagesVisited = new HashSet<String>();
+        pagesToVisit = new LinkedList<String>();
+        trieSTList = new ArrayList<TrieST>();
+        resultList = new ArrayList<Result>();
         String currentUrl;
 
         while (pagesVisited.size() < MAX_PAGES_TO_SEARCH) {
@@ -63,9 +51,10 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
 
             System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
         }
-        System.out.println(resultList);
-        System.out.println("Size of data "+ resultList.size());
+        System.out.println(this.resultList);
+        System.out.println("Size of data "+ this.resultList.size());
         //TODO call for indexing
+        return this.resultList;
     }
 
     @Override
@@ -97,7 +86,7 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         return links;
 
     }
-    //to fetch the nect url from the pagesToVisit array.
+    //to fetch the next url from the pagesToVisit array.
     private String nextUrl() {
         String nextUrl;
         do {
