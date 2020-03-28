@@ -38,7 +38,7 @@ function searchWord(value) {
       console.log("data: " + response);
       let tag = "";
       response.data.forEach(element => {
-        if (element.title !== null)
+        if (element.title !== null && element.description !== null)
           tag +=
             ' <div class="result"><a class="title" href="' +
             element.url +

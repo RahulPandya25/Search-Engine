@@ -4,7 +4,6 @@ import com.project.computingconcept.searchengine.Model.Result;
 import com.project.computingconcept.searchengine.Service.WebCrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.project.computingconcept.searchengine.Service.WordPredictService;
-import com.project.computingconcept.searchengine.ServiceImpl.WordPredictServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class SearchController {
 
-    private static final String STARTING_URL = "https://www.javatpoint.com/";
+    private static final String STARTING_URL = "https://www.google.com/search?q=";
 
     @Autowired
     private WebCrawlerService webCrawlerService;
@@ -28,7 +27,7 @@ public class SearchController {
 
     @GetMapping("/search/{key}")
     private List<Result> searchHTMLFiles(@PathVariable String key) throws IOException {
-        return webCrawlerService.search(key,STARTING_URL);
+        return webCrawlerService.search(key,STARTING_URL+key);
     }
 
     @GetMapping("/autocomplete/{key}")

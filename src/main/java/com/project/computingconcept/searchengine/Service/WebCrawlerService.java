@@ -15,10 +15,5 @@ public interface WebCrawlerService {
      */
     public List<Result> search(String word, String url) throws IOException;
 
-    /**
-     *
-     * @param word
-     * @return
-     */
-    public boolean searchForWord(String word);
+   
 }
