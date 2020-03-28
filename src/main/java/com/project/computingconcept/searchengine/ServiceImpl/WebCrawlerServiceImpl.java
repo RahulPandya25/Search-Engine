@@ -55,8 +55,6 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
 
             System.out.println("Visited " + this.pagesVisited.size() + " web pages");
         }
-        System.out.println(resultList);
-        System.out.println("Size of data " + resultList.size());
         List<Result> resultsList = indexAndSortResultList(word);
         return resultsList;
     }
@@ -65,9 +63,12 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
         Result[] results = new Result[MAX_RANK_TO_BE_DISPLAYED];
         Result[] allResults = new Result[resultList.size()];
         resultList.toArray(allResults);
-
-//        sorting results
-        Sort.quicksort(allResults, word);
+        //        sorting results
+        if (resultList.size() > 100) {
+            Sort.quickSelect(allResults, MAX_RANK_TO_BE_DISPLAYED, word);
+        } else {
+            Sort.quicksort(allResults, word);
+        }
 
 //        reversing array
         if (allResults.length > MAX_RANK_TO_BE_DISPLAYED) {
@@ -76,11 +77,11 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
                 results[i] = allResults[j--];
             }
         }
-        
+
         return Arrays.asList(results);
     }
 
-   
+
     // to crawl through each url and get all the page links, create trie and add the result object in the list.
     private List<String> crawl(String currentUrl) throws IOException {
         List<String> links = new LinkedList<String>();
@@ -105,22 +106,21 @@ public class WebCrawlerServiceImpl implements WebCrawlerService {
             result.setTitle(titleTag.text());
             result.setUrl(currentUrl);
             this.resultList.add(result);
-            
-            if(currentUrl.contains("google")) {
-	            Elements numberOfLinks = document.getElementsByClass("r");
-	            for(Element l : numberOfLinks) {
-		            Element link = l.select("a[href]").first();
-		            links.add(link.absUrl("href"));
-		            
-	            }
-            }else {
-            	Elements linksOnPage = document.select("a[href]");
-	            for(Element link : linksOnPage)
-	            {
-	                links.add(link.absUrl("href"));
-	            }
+
+            if (currentUrl.contains("google")) {
+                Elements numberOfLinks = document.getElementsByClass("r");
+                for (Element l : numberOfLinks) {
+                    Element link = l.select("a[href]").first();
+                    links.add(link.absUrl("href"));
+
+                }
+            } else {
+                Elements linksOnPage = document.select("a[href]");
+                for (Element link : linksOnPage) {
+                    links.add(link.absUrl("href"));
+                }
             }
-        
+
         }
         return links;
     }
