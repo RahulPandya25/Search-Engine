@@ -2,6 +2,8 @@ const URL = "http://localhost:8080";
 const showErrorMsg = false;
 const errorMsg = "Sorry we coundn't connect to server";
 
+$(".loader-container").hide();
+
 function keyUp(event) {
   let value = $("#searchBox")[0].value;
 
@@ -14,8 +16,8 @@ function keyUp(event) {
 
   // if pressed enter
   if (event.key === "Enter" && value !== "") {
-    searchWord(value);
     $(".suggestions").hide();
+    searchWord(value);
   }
 }
 
@@ -28,23 +30,31 @@ function searchThisKey(event) {
 
 function searchWord(value) {
   // call search API
+  $(".loader-container").show();
+  $(".no-content").hide();
+  $(".content").hide();
   axios.get(URL + "/search/" + value).then(response => {
     if (response && response.status === 200) {
       console.log("data: " + response);
       let tag = "";
       response.data.forEach(element => {
-        tag +=
-          ' <div class="result"><div class="title">' +
-          element.title +
-          '</div><div class="desc">' +
-          element.description +
-          '</div><div class="link"><a href="' +
-          element.url +
-          '">' +
-          element.url +
-          "</a></div></div>";
+        if (element.title !== null)
+          tag +=
+            ' <div class="result"><a class="title" href="' +
+            element.url +
+            '">' +
+            element.title +
+            '</a><div class="desc">' +
+            element.description +
+            '</div><div class="link"><a href="' +
+            element.url +
+            '">' +
+            element.url +
+            "</a></div></div>";
       });
+      $(".content").show();
       $(".content").empty();
+      $(".loader-container").hide();
       $(".content").append(tag);
     } else showErrorMsg = true;
   });
